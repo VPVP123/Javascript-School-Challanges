@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Lab 3 - Validating Forms</title>
+	<script>
+		
+		// Write your JavaScript code here.
+		// Display the error messages wherever you think it makes most sense.
+		
+        document.addEventListener("DOMContentLoaded", function(){
+
+        const form = document.getElementById("createAccountForm")
+        tableOfError = document.createElement("ul")
+
+        form.addEventListener("submit", function(event){
+            tableOfError.innerHTML = ''
+            const email = document.getElementById("email").value
+            const password1 = document.getElementById("password1").value
+            const password2 = document.getElementById("password2").value
+            let errorArray = []
+
+            if(!email.includes("@") || email == ''){
+                errorArray.push("Email not valid")
+            }
+            
+            if(password1.length < 8){
+                errorArray.push("Password must be 8 or more characters")
+            }
+
+            if(password1 != password2){
+                errorArray.push("Password 1 and 2 must match")
+            }
+
+            if(errorArray.length > 0){
+                event.preventDefault()
+                errorArray.forEach(error => {
+                    newError = document.createElement("li")
+                    newError.innerText = error
+                    tableOfError.appendChild(newError)
+                });
+
+                console.log(errorArray)
+                form.appendChild(tableOfError)
+            }
+        })
+
+        })
+
+
+	</script>
+</head>
+<body>
+	
+	<h1>Create account</h1>
+	
+	<form id="createAccountForm" method="POST">
+		
+		<div>Email: <input type="text" name="email" id="email"></div>
+		
+		<div>Password: <input type="password" name="password1" id="password1"></div>
+		
+		<div>Password (repeat): <input type="password" name="password2" id="password2"></div>
+		
+        <input type="submit" value="Create account">
+        
+	</form>
+	
+</body>
+</html>
